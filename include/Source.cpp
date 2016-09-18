@@ -1,15 +1,22 @@
 #include "Header.h"
 
-template <typename T> //освобождаем памяти
+template <typename T>//РєРѕРїРёСЂРѕРІР°РЅРёРµ Рё РІС‹РґРµР»РµРЅРёРµ РїР°РјСЏС‚Рё 
+auto stack<T>::mem_copy(size_t count_m, size_t array_size_m, const T * tmp)->T* {
+	T *mass = new T[array_size_m];
+	copy(tmp,tmp+count_m,mass);
+	return mass; 
+}
+
+template <typename T> //Г®Г±ГўГ®ГЎГ®Г¦Г¤Г ГҐГ¬ ГЇГ Г¬ГїГІГЁ
 inline stack<T>::~stack()
 {
 	delete[] array_;
 }
 
-template <typename T> //конструктор по умолчанию
+template <typename T> //ГЄГ®Г­Г±ГІГ°ГіГЄГІГ®Г° ГЇГ® ГіГ¬Г®Г«Г·Г Г­ГЁГѕ
 inline stack<T>::stack() :count_(0), array_size_(0), array_(nullptr) {};
 
-template <typename T> //вставляем эл-нт в стэк 
+template <typename T> //ГўГ±ГІГ ГўГ«ГїГҐГ¬ ГЅГ«-Г­ГІ Гў Г±ГІГЅГЄ 
 inline auto stack<T>::push(T const &com)->void {
 	if (array_ == nullptr) {
 		array_ = new T[1];
@@ -31,13 +38,13 @@ inline auto stack<T>::push(T const &com)->void {
 	}
 }
 
-template <typename T> //конструктор копирования
+template <typename T> //ГЄГ®Г­Г±ГІГ°ГіГЄГІГ®Г° ГЄГ®ГЇГЁГ°Г®ГўГ Г­ГЁГї
 inline stack<T>::stack(const stack&tmp) :count_(tmp.count_), array_size_(tmp.array_size_), array_(new T[tmp.array_size_]) {
 	array_ = new T[array_size_];
 	copy(tmp.array_, tmp.array_ + count_, array_);
 }
 
-template <typename T> //перегружаем оператор присваивания 
+template <typename T> //ГЇГҐГ°ГҐГЈГ°ГіГ¦Г ГҐГ¬ Г®ГЇГҐГ°Г ГІГ®Г° ГЇГ°ГЁГ±ГўГ ГЁГўГ Г­ГЁГї 
 inline auto stack<T>::operator=(const stack&tmp)->stack& {
 	if (this != &tmp) {
 		delete[] array_;
@@ -49,23 +56,23 @@ inline auto stack<T>::operator=(const stack&tmp)->stack& {
 	return *this;
 }
 
-template <typename T> // выводим стэк
+template <typename T> // ГўГ»ГўГ®Г¤ГЁГ¬ Г±ГІГЅГЄ
 inline auto stack<T>::print()->void {
 	for (size_t i(0); i < count_; i++) cout << array_[i] << endl;
 }
 
-template <typename T> //возвращаем count_
+template <typename T> //ГўГ®Г§ГўГ°Г Г№Г ГҐГ¬ count_
 inline auto stack<T>::count() const noexcept->size_t {
 	return count_;
 }
 
-template <typename T> // уменьшаем count_ 
+template <typename T> // ГіГ¬ГҐГ­ГјГёГ ГҐГ¬ count_ 
 inline auto stack<T>::pop()->T {
 	if (count_ == 0) throw logic_error("Empty!");
 	return --count_;
 }
 
-template <typename T> //удаляем эл-нт
+template <typename T> //ГіГ¤Г Г«ГїГҐГ¬ ГЅГ«-Г­ГІ
 inline auto stack<T>::top() const->T& {
 	if (count_ == 0) throw logic_error("Empty!");
 	return array_[count_];

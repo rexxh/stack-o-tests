@@ -7,16 +7,16 @@ auto stack<T>::mem_copy(size_t count_m, size_t array_size_m, const T * tmp)->T* 
 	return mass; 
 }
 
-template <typename T> //îñâîáîæäàåì ïàìÿòè
+template <typename T> 
 inline stack<T>::~stack()
 {
 	delete[] array_;
 }
 
-template <typename T> //êîíñòðóêòîð ïî óìîë÷àíèþ
+template <typename T> 
 inline stack<T>::stack() :count_(0), array_size_(0), array_(nullptr) {};
 
-template <typename T> //âñòàâëÿåì ýë-íò â ñòýê 
+template <typename T> 
 inline auto stack<T>::push(T const &com)->void {
 	if (array_ == nullptr) {
 		array_ = new T[1];
@@ -25,11 +25,10 @@ inline auto stack<T>::push(T const &com)->void {
 	}
 	else {
 		if (count_ == array_size_) {
-			T *tmp = array_;
 			array_size_ *= 2;
-			array_ = new T[array_size_];
-			std::copy(tmp, tmp + count_, array_);
-			delete[] tmp;
+			T *tmp = mem_copy(count_,array_size_,array_);
+			delete[] array_;
+			array_ = tmp;
 
 		}
 		array_[count_] = com;
@@ -38,13 +37,11 @@ inline auto stack<T>::push(T const &com)->void {
 	}
 }
 
-template <typename T> //êîíñòðóêòîð êîïèðîâàíèÿ
-inline stack<T>::stack(const stack&tmp) :count_(tmp.count_), array_size_(tmp.array_size_), array_(new T[tmp.array_size_]) {
-	array_ = new T[array_size_];
-	copy(tmp.array_, tmp.array_ + count_, array_);
-}
+template <typename T> 
+inline stack<T>::stack(const stack&tmp) :count_(tmp.count_), array_size_(tmp.array_size_),array_(copy(tmp.count_, tmp.array_size, tmp.array_)) {}
+	
 
-template <typename T> //ïåðåãðóæàåì îïåðàòîð ïðèñâàèâàíèÿ 
+template <typename T>  
 inline auto stack<T>::operator=(const stack&tmp)->stack& {
 	if (this != &tmp) {
 		delete[] array_;
@@ -56,23 +53,18 @@ inline auto stack<T>::operator=(const stack&tmp)->stack& {
 	return *this;
 }
 
-template <typename T> // âûâîäèì ñòýê
-inline auto stack<T>::print()->void {
-	for (size_t i(0); i < count_; i++) cout << array_[i] << endl;
-}
-
-template <typename T> //âîçâðàùàåì count_
+template <typename T> 
 inline auto stack<T>::count() const noexcept->size_t {
 	return count_;
 }
 
-template <typename T> // óìåíüøàåì count_ 
+template <typename T> 
 inline auto stack<T>::pop()->T {
 	if (count_ == 0) throw logic_error("Empty!");
 	return --count_;
 }
 
-template <typename T> //óäàëÿåì ýë-íò
+template <typename T> 
 inline auto stack<T>::top() const->T& {
 	if (count_ == 0) throw logic_error("Empty!");
 	return array_[count_];

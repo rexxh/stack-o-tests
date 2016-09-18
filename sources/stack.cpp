@@ -1,4 +1,4 @@
-#include "Header.h"
+#include "stack.h"
 
 template <typename T>//копирование и выделение памяти 
 auto stack<T>::mem_copy(size_t count_m, size_t array_size_m, const T * tmp)->T* {

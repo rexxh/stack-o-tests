@@ -41,7 +41,7 @@ inline auto stack<T>::push(T const &val)->void {
 template <typename T>
 inline stack<T>::stack(const stack&tmp) :count_(tmp.count_), array_size_(tmp.array_size_), array_(mem_copy(tmp.count_, tmp.array_size_, tmp.array_)) {}
 
-template <typename T> 
+template <typename T>
 inline auto stack<T>::operator=(const stack&tmp)->stack& {
 	if (this != &tmp) {
 		delete[] array_;
@@ -55,6 +55,8 @@ inline auto stack<T>::operator=(const stack&tmp)->stack& {
 template <typename T>
 inline auto stack<T>::count() const noexcept->size_t {
 	return count_;
+}
+
 template<typename T>
 inline auto stack<T>::pop() -> T {
 if (count_ == 0) {

@@ -8,11 +8,9 @@ auto mem_copy(size_t count_m, size_t array_size_m, const T * tmp)->T* {
 }
 
 template<typename T>
-inline auto stack<T>::empty()->bool { 
-	if (this->count()) { return false; }
-	else { return true; }
+inline auto stack<T>::empty()->bool {
+	return (count_ == 0);
 }
-
 template <typename T>
 inline stack<T>::~stack()
 {
@@ -57,10 +55,15 @@ inline auto stack<T>::count() const noexcept->size_t {
 	return count_;
 }
 
-template<typename T>
-inline auto stack<T>::pop() -> T {
-if (count_ == 0) {
-throw std::range_error("Empty stack");
+template <typename T> 
+inline auto stack<T>::pop()->void {
+	if (count_ == 0) throw std::logic_error("Empty!");
+	 --count_;
 }
-return array_[--count_];
+
+template <typename T>
+inline auto stack<T>::top() const->T& {
+	if (count_ == 0) throw std::logic_error("Empty!");
+	return ptr_[count_];
+
 }

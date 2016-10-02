@@ -59,6 +59,6 @@ SCENARIO("top", "[top]"){
   s.push(2);
   s.push(3);
 
-  REQUIRE(s.top()==3);
+  REQUIRE(s.top()==0);
 }
 

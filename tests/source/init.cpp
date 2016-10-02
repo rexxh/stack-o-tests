@@ -53,3 +53,18 @@ SCENARIO("empty3", "[empty3]"){
   
   REQUIRE(s1.empty()==false);
 }
+
+SCENARIO("Stack: top", "[top]") {
+	stack<size_t> a;
+	a.push(1);
+	a.push(2);
+	REQUIRE(a.top() == 2);
+}
+
+SCENARIO("Stack: pop", "[pop]") {
+	stack<size_t> a;
+	a.push(1);
+	a.push(2);
+	a.pop();
+	REQUIRE(a.count() == 1);
+}

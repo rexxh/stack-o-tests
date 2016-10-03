@@ -47,7 +47,7 @@ inline auto stack<T>::push(T const &val)->void {
 template <typename T>
 inline stack<T>::stack(const stack&tmp) :count_(tmp.count_), array_size_(tmp.array_size_), array_(mem_copy(tmp.count_, tmp.array_size_, tmp.array_)) {}
 
-template <typename T>//перегрузка оператора присваивания 
+template <typename T>
 inline auto stack<T>::operator=(const stack &tmp)->stack& {
 	if (this != &tmp) {
 		(stack(tmp)).swap(*this);
@@ -57,8 +57,8 @@ inline auto stack<T>::operator=(const stack &tmp)->stack& {
 
 template<typename T>
 auto stack<T>::swap(stack & tmp) -> void {
-	std::swap(tmp.size_, size_);
-	std::swap(tmp.ptr_, ptr_);
+	std::swap(tmp.array_size_, array_size_);
+	std::swap(tmp.array_, array_);
 	std::swap(tmp.count_, count_);
 }
 

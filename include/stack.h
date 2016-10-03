@@ -9,8 +9,7 @@ public:
 	stack(const stack&); /*strong*/
 	auto count() const noexcept->size_t;/*noexcept*/
 	auto push(T const &)->void;/*strong*/
-	auto pop()->void; /*strong*/
-	auto top() const->T&;/*strong*/
+	auto pop()->void;
 	~stack(); 	/*noexcept*/
 	auto operator=(const stack&tmp)->stack&;/*strong*/
 	auto empty()->bool;	/*noexcept*/

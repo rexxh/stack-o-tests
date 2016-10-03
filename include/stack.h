@@ -14,8 +14,8 @@ public:
 	~stack(); 	/*noexcept*/
 	auto operator=(const stack&tmp)->stack&;/*strong*/
 	auto empty()->bool;	/*noexcept*/
-private:
 	T * array_;
 	size_t array_size_;
 	size_t count_;
+	auto swap(stack & tmp) -> void; /*noexcept*/
 };

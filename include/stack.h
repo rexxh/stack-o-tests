@@ -6,7 +6,7 @@ class stack
 {
 public:
 	stack();/*noexcept*/
-	stack(const stack&); /*noexcept*/
+	stack(const stack&); /*strong*/
 	auto count() const noexcept->size_t;/*noexcept*/
 	auto push(T const &)->void;/*strong*/
 	auto pop()->void; /*strong*/

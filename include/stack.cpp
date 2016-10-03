@@ -3,7 +3,15 @@
 template <typename T>
 auto mem_copy(size_t count_m, size_t array_size_m, const T * tmp)->T* {
 	T *mass = new T[array_size_m];
-	copy(tmp,tmp+count_m,mass);
+	try{
+		std::copy(tmp,tmp+count_m,mass);
+	}
+	catch(...){
+	
+		delete[] mass;
+	
+		throw;
+	}
 	return mass; 
 }
 

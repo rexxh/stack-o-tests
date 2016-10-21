@@ -38,16 +38,16 @@ void destroy(FwdIter first, FwdIter last) noexcept
 	}
 }
 
-template <typename T>// êîíñòðóêòîð àëëîêàòîðà
+template <typename T>
 allocator<T>::allocator(size_t size) : ptr_(static_cast<T *>(size == 0 ? nullptr : operator new(size * sizeof(T)))), size_(0), count_(size) {
 };
 
-template <typename T>//äåñòðóêòîð àëëîêàòîðà
+template <typename T>
 allocator<T>::~allocator() {
 operator delete(array_);
 };
 
-template <typename T>//swap allocator
+template <typename T>
 auto allocator<T>::swap(allocator& other)->void {
 	std::swap(array_, other.array_);
 	std::swap(size_, other.size_);

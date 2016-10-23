@@ -3,32 +3,22 @@
 template<typename T> 
 auto stack<T>::empty() const noexcept->bool {
 	return (allocator<T>::count_ == 0);
-
-template <typename T>
-auto mem_copy(size_t count_m, size_t array_size_m, const T * tmp)->T* {
-	T *mass = new T[array_size_m];
-	std::copy(tmp, tmp + count_m, mass);
-	return mass;
 }
-
 
 template <typename T>
 stack<T>::~stack() {
 destroy(allocator<T>::array_, allocator<T>::array_ + allocator<T>::count_);};
 
 template <typename T>
-stack<T>::stack()  {};
-
-
+stack<T>::stack(size_t size): allocator<T>(size) {};
 
 template <typename T>
 auto stack<T>::push(T const &val)->void {
 	if (allocator<T>::count_ == allocator<T>::size_) {
-		size_t size = allocator<T>::size_ * 2 + (allocator<T>::size_ == 0);
-		T *tmp = mem_copy(allocator<T>::count_, size, allocator<T>::array_);
-		delete[] allocator<T>::array_;
-		allocator<T>::array_ = tmp;
-		allocator<T>::size_ = size;
+		size_t array_size = allocator<T>::size_ * 2 + (allocator<T>::size_ == 0);
+		stack<T> temp(array_size);
+		while (temp.count() < allocator<T>::count_) temp.push(allocator<T>::array_[temp.count()]); 
+		this->swap(temp);
 	}
 	construct(allocator<T>::array_+allocator<T>::count_,val);
 	++allocator<T>::count_;
@@ -36,20 +26,15 @@ auto stack<T>::push(T const &val)->void {
 
 
 template <typename T>
-stack<T>::stack(stack const &tmp) {
+stack<T>::stack(stack const &tmp): allocator<T>(tmp.size_){
+	for (size_t i = 0; i < tmp.count_; i++) construct(allocator<T>::array_ + i, tmp.array_[i]);
 	allocator<T>::count_ = tmp.count_;
-	allocator<T>::array_ = mem_copy(tmp.count_, tmp.size_, tmp.array_);
-	allocator<T>::size_ = tmp.size_;
 };
 
 template <typename T>
 auto stack<T>::operator=(const stack &tmp)->stack& {
 	if (this != &tmp) {
-		T* cp = mem_copy(tmp.count_, tmp.size_, tmp.array_);
-		delete[] allocator<T>::array_; 
-		allocator<T>::array_ = cp;
-		allocator<T>::size_ =tmp.size_;
-		allocator<T>::count_ = tmp.count_;
+		(stack(tmp)).swap(*this);
 	}
 	return *this;
 }

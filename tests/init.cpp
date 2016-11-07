@@ -1,4 +1,4 @@
-#include "stack.hpp"
+#include "stack.cpp"
 #include <catch.hpp>
 #include <iostream>
 using namespace std;

@@ -1,14 +1,13 @@
 #include "stdafx.h"
 #include <iostream>
 
-using namespace std;
-
-
-class Target  {
+class Target
+{
 public:
-	virtual ~Target();
+	virtual ~Target() {}
 	virtual void request() = 0;
 };
+
 
 class Client {
 public:
@@ -17,23 +16,27 @@ public:
 	}
 };
 
+
 class Adaptee
 {
 public:
-	void SpecificRequest() { 
-		cout << "Adaptee's request"; 
+	void SpecificRequest() {
+		std::cout << "Adaptee's request";
 	}
 };
 
-class Adapter: public Target {
-public: 
-	Adapter(Adaptee* p) : adaptee(p) {
+
+class Adapter : public Target
+{
+public:
+	Adapter(Adaptee* p) : p_(p) {
 	}
-	~Adapter() { delete adaptee; }
+	~Adapter() {
+		delete p_;
+	}
 	void request() {
-		adaptee->SpecificRequest();
+		p_->SpecificRequest();
 	}
 private:
-	Adaptee *adaptee;
+	Adaptee* p_;
 };
-
